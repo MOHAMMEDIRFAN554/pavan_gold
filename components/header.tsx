@@ -38,25 +38,33 @@ export default function Header() {
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${isScrolled
-            ? "bg-background/80 shadow-lg shadow-primary/5 backdrop-blur-xl border-b border-primary/5"
-            : "bg-transparent py-4"
+          ? "bg-background/80 shadow-lg shadow-primary/5 backdrop-blur-xl border-b border-primary/5"
+          : "bg-transparent py-4"
           }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
           <Link href="/" className="flex items-center gap-3 group">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <Image
-                src="/images/logo.png"
-                alt="PAVAN GOLD Logo"
-                width={120}
-                height={60}
-                className="h-16 w-auto object-contain"
-                priority
-              />
-            </motion.div>
+            <AnimatePresence>
+              {!isScrolled && (
+                <motion.div
+                  initial={{ opacity: 0, width: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, width: "auto", scale: 1 }}
+                  exit={{ opacity: 0, width: 0, scale: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className="origin-left"
+                >
+                  <Image
+                    src="/images/logo.png"
+                    alt="PAVAN GOLD Logo"
+                    width={220}
+                    height={220}
+                    className="h-40 w-auto object-contain"
+                    priority
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
@@ -65,15 +73,15 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={`group relative text-sm tracking-wide transition-colors duration-300 font-medium ${pathname === link.href
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
+                  ? "text-primary"
+                  : "text-foreground/80 hover:text-primary"
                   }`}
               >
                 {link.label}
                 <span
                   className={`absolute -bottom-1 left-0 h-0.5 bg-primary rounded-full transition-all duration-300 ${pathname === link.href
-                      ? "w-full"
-                      : "w-0 group-hover:w-full"
+                    ? "w-full"
+                    : "w-0 group-hover:w-full"
                     }`}
                 />
               </Link>
@@ -122,9 +130,9 @@ export default function Header() {
                 <Image
                   src="/images/logo.png"
                   alt="PAVAN GOLD Logo"
-                  width={100}
-                  height={50}
-                  className="h-12 w-auto object-contain"
+                  width={160}
+                  height={80}
+                  className="h-20 w-auto object-contain"
                 />
                 <button
                   type="button"
@@ -149,8 +157,8 @@ export default function Header() {
                     <Link
                       href={link.href}
                       className={`block text-3xl font-serif tracking-wide transition-colors ${pathname === link.href
-                          ? "text-primary font-medium"
-                          : "text-foreground/70 hover:text-primary"
+                        ? "text-primary font-medium"
+                        : "text-foreground/70 hover:text-primary"
                         }`}
                       onClick={() => setIsMobileOpen(false)}
                     >

@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Hero from "@/components/hero";
 import MarqueeBanner from "@/components/marquee-banner";
 import OffersPreview from "@/components/offers-preview";
+import Testimonials from "@/components/testimonials";
 import WhyChooseUs from "@/components/why-choose-us";
 
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <OffersPreview />
       <GoldSchemesPreview />
       <WhyChooseUs />
+      <Testimonials />
       <Footer />
     </main>
   );

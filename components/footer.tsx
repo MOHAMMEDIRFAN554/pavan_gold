@@ -1,6 +1,6 @@
 "use client";
 
-import { Facebook, Instagram, MessageCircle } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FadeInUp, GoldLine } from "./animations";
@@ -25,9 +25,9 @@ export default function Footer() {
                 <Image
                   src="/images/logo.png"
                   alt="PAVAN GOLD Logo"
-                  width={50}
-                  height={50}
-                  className="h-14 w-auto"
+                  width={220}
+                  height={220}
+                  className="h-36 w-auto"
                 />
               </Link>
               <p className="leading-relaxed text-muted-foreground">
@@ -52,6 +52,15 @@ export default function Footer() {
                   aria-label="Facebook"
                 >
                   <Facebook className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@pavangoldofficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="h-4 w-4" />
                 </a>
                 <a
                   href="https://wa.me/919846192222"
@@ -94,7 +103,7 @@ export default function Footer() {
               <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
                 <li>
                   <p className="leading-relaxed">
-                    MITHRA GOLD AND DIAMONDS LLP
+                    PAVAN GOLD 
                     <br />
                     20/29, A-C, P-R, K.M. Complex,
                     <br />
@@ -166,7 +175,7 @@ export default function Footer() {
           <p>
             &copy; {new Date().getFullYear()} PAVAN GOLD. All rights reserved.
           </p>
-          <p>MITHRA GOLD AND DIAMONDS LLP</p>
+          {/* <p>MITHRA GOLD AND DIAMONDS LLP</p> */}
         </div>
       </div>
     </footer>

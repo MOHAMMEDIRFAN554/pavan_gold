@@ -1,67 +1,61 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Filter, Search, ShoppingBag } from "lucide-react";
+import { Filter, Search, MessageCircle, Heart } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { FadeInUp, MagneticButton } from "./animations";
+import EnquiryModal from "./enquiry-modal";
 
-// Mock Product Data
+// Mock Product Data - 40 Items
 const products = [
-    {
-        id: 1,
-        name: "Royal Gold Necklace",
-        category: "Necklaces",
-        price: 45000,
-        image: "/images/necklaces.jpg", // Using updated image path
-        type: "Gold",
-        occasion: "Wedding",
-    },
-    {
-        id: 2,
-        name: "Diamond Solitaire Ring",
-        category: "Rings",
-        price: 75000,
-        image: "/images/rings.jpg",
-        type: "Diamond",
-        occasion: "Engagement",
-    },
-    {
-        id: 3,
-        name: "Elegant Stud Earrings",
-        category: "Earrings",
-        price: 15000,
-        image: "/images/earrings.jpg",
-        type: "Gold",
-        occasion: "Daily Wear",
-    },
-    {
-        id: 4,
-        name: "Traditional Bangle Set",
-        category: "Bracelets",
-        price: 60000,
-        image: "/images/bracelets.jpg",
-        type: "Gold",
-        occasion: "Festival",
-    },
-    {
-        id: 5,
-        name: "Platinum Band",
-        category: "Rings",
-        price: 35000,
-        image: "/images/rings.jpg",
-        type: "Platinum",
-        occasion: "Anniversary",
-    },
-    {
-        id: 6,
-        name: "Ruby Pendant Chain",
-        category: "Necklaces",
-        price: 28000,
-        image: "/images/necklaces.jpg",
-        type: "Gemstone",
-        occasion: "Party",
-    },
+    // Rings (1-10)
+    { id: 1, name: "Royal Diamond Ring", category: "Rings", price: 45000, image: "/images/rings.jpg", type: "Diamond", occasion: "Wedding" },
+    { id: 2, name: "Classic Gold Band", category: "Rings", price: 15000, image: "/images/rings.jpg", type: "Gold", occasion: "Daily Wear" },
+    { id: 3, name: "Platinum Solitaire", category: "Rings", price: 55000, image: "/images/rings.jpg", type: "Platinum", occasion: "Engagement" },
+    { id: 4, name: "Ruby Gemstone Ring", category: "Rings", price: 25000, image: "/images/rings.jpg", type: "Gemstone", occasion: "Party" },
+    { id: 5, name: "Emerald Gold Ring", category: "Rings", price: 30000, image: "/images/rings.jpg", type: "Gold", occasion: "Festival" },
+    { id: 6, name: "Vintage Diamond Ring", category: "Rings", price: 60000, image: "/images/rings.jpg", type: "Diamond", occasion: "Wedding" },
+    { id: 7, name: "Rose Gold Stackable", category: "Rings", price: 12000, image: "/images/rings.jpg", type: "Gold", occasion: "Daily Wear" },
+    { id: 8, name: "Sapphire Cocktail Ring", category: "Rings", price: 40000, image: "/images/rings.jpg", type: "Gemstone", occasion: "Party" },
+    { id: 9, name: "Platinum Love Band", category: "Rings", price: 35000, image: "/images/rings.jpg", type: "Platinum", occasion: "Anniversary" },
+    { id: 10, name: "Antique Gold Ring", category: "Rings", price: 28000, image: "/images/rings.jpg", type: "Gold", occasion: "Festival" },
+
+    // Necklaces (11-20)
+    { id: 11, name: "Bridal Gold Choker", category: "Necklaces", price: 120000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Wedding" },
+    { id: 12, name: "Diamond Pendant Chain", category: "Necklaces", price: 45000, image: "/images/necklaces.jpg", type: "Diamond", occasion: "Daily Wear" },
+    { id: 13, name: "Emerald Necklace", category: "Necklaces", price: 85000, image: "/images/necklaces.jpg", type: "Gemstone", occasion: "Party" },
+    { id: 14, name: "Platinum Chain", category: "Necklaces", price: 55000, image: "/images/necklaces.jpg", type: "Platinum", occasion: "Daily Wear" },
+    { id: 15, name: "Temple Jewellery Set", category: "Necklaces", price: 150000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Festival" },
+    { id: 16, name: "Layered Gold Chain", category: "Necklaces", price: 35000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Party" },
+    { id: 17, name: "Solitaire Necklace", category: "Necklaces", price: 65000, image: "/images/necklaces.jpg", type: "Diamond", occasion: "Engagement" },
+    { id: 18, name: "Ruby Bead Necklace", category: "Necklaces", price: 22000, image: "/images/necklaces.jpg", type: "Gemstone", occasion: "Casual" },
+    { id: 19, name: "Kundan Polki Set", category: "Necklaces", price: 95000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Wedding" },
+    { id: 20, name: "Mangalsutra Design", category: "Necklaces", price: 48000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Daily Wear" },
+
+    // Earrings (21-30)
+    { id: 21, name: "Diamond Studs", category: "Earrings", price: 25000, image: "/images/earrings.jpg", type: "Diamond", occasion: "Daily Wear" },
+    { id: 22, name: "Gold Jhumkas", category: "Earrings", price: 35000, image: "/images/earrings.jpg", type: "Gold", occasion: "Festival" },
+    { id: 23, name: "Chandbali Earrings", category: "Earrings", price: 45000, image: "/images/earrings.jpg", type: "Gemstone", occasion: "Wedding" },
+    { id: 24, name: "Platinum Drops", category: "Earrings", price: 30000, image: "/images/earrings.jpg", type: "Platinum", occasion: "Party" },
+    { id: 25, name: "Ruby Studs", category: "Earrings", price: 18000, image: "/images/earrings.jpg", type: "Gemstone", occasion: "Daily Wear" },
+    { id: 26, name: "Temple Jhumkas", category: "Earrings", price: 42000, image: "/images/earrings.jpg", type: "Gold", occasion: "Festival" },
+    { id: 27, name: "Diamond Hoops", category: "Earrings", price: 55000, image: "/images/earrings.jpg", type: "Diamond", occasion: "Party" },
+    { id: 28, name: "Pearl Drop Earrings", category: "Earrings", price: 12000, image: "/images/earrings.jpg", type: "Gemstone", occasion: "Daily Wear" },
+    { id: 29, name: "Bridal Earring Set", category: "Earrings", price: 85000, image: "/images/earrings.jpg", type: "Gold", occasion: "Wedding" },
+    { id: 30, name: "Sui Dhaga Earrings", category: "Earrings", price: 22000, image: "/images/earrings.jpg", type: "Gold", occasion: "Daily Wear" },
+
+    // Bracelets (31-40)
+    { id: 31, name: "Gold Bangle Set", category: "Bracelets", price: 65000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Wedding" },
+    { id: 32, name: "Diamond Tennis Bracelet", category: "Bracelets", price: 95000, image: "/images/bracelets.jpg", type: "Diamond", occasion: "Party" },
+    { id: 33, name: "Platinum Cuff", category: "Bracelets", price: 45000, image: "/images/bracelets.jpg", type: "Platinum", occasion: "Daily Wear" },
+    { id: 34, name: "Gemstone Bracelet", category: "Bracelets", price: 28000, image: "/images/bracelets.jpg", type: "Gemstone", occasion: "Festival" },
+    { id: 35, name: "Traditional Kadas", category: "Bracelets", price: 75000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Wedding" },
+    { id: 36, name: "Charm Bracelet", category: "Bracelets", price: 18000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Daily Wear" },
+    { id: 37, name: "Rose Gold Bangle", category: "Bracelets", price: 32000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Party" },
+    { id: 38, name: "Men's Gold Bracelet", category: "Bracelets", price: 55000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Daily Wear" },
+    { id: 39, name: "Diamond Kada", category: "Bracelets", price: 110000, image: "/images/bracelets.jpg", type: "Diamond", occasion: "Wedding" },
+    { id: 40, name: "Evil Eye Bracelet", category: "Bracelets", price: 15000, image: "/images/bracelets.jpg", type: "Gemstone", occasion: "Daily Wear" },
 ];
 
 const categories = ["All", "Rings", "Necklaces", "Earrings", "Bracelets"];
@@ -74,6 +68,20 @@ export default function ProductsGrid() {
     const [selectedOccasion, setSelectedOccasion] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
     const [showFilters, setShowFilters] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+    const [wishlist, setWishlist] = useState<Set<number>>(new Set());
+
+    const toggleWishlist = (id: number) => {
+        setWishlist(prev => {
+            const next = new Set(prev);
+            if (next.has(id)) {
+                next.delete(id);
+            } else {
+                next.add(id);
+            }
+            return next;
+        });
+    };
 
     const filteredProducts = products.filter((product) => {
         const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
@@ -164,18 +172,20 @@ export default function ProductsGrid() {
                             <h3 className="font-serif text-lg font-medium mb-4">Occasion</h3>
                             <div className="space-y-2">
                                 {occasions.map(occasion => (
-                                    <label key={occasion} className="flex items-center gap-2 cursor-pointer group">
+                                    <div
+                                        key={occasion}
+                                        onClick={() => setSelectedOccasion(occasion)}
+                                        className="flex items-center gap-2 cursor-pointer group"
+                                    >
                                         <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${selectedOccasion === occasion ? "border-primary" : "border-muted-foreground group-hover:border-primary"
                                             }`}>
                                             {selectedOccasion === occasion && <div className="w-2 h-2 rounded-full bg-primary" />}
                                         </div>
                                         <span className={`text-sm transition-colors ${selectedOccasion === occasion ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-primary"
-                                            }`}
-                                            onClick={() => setSelectedOccasion(occasion)}
-                                        >
+                                            }`}>
                                             {occasion}
                                         </span>
-                                    </label>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -208,11 +218,27 @@ export default function ProductsGrid() {
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
+                                            {/* Wishlist Button */}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleWishlist(product.id);
+                                                }}
+                                                className="absolute top-3 right-3 p-2 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-red-500 transition-all z-10"
+                                            >
+                                                <Heart
+                                                    className={`h-5 w-5 ${wishlist.has(product.id) ? "fill-red-500 text-red-500" : ""}`}
+                                                />
+                                            </button>
+
                                             <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full transition-transform duration-300 group-hover:translate-y-0">
                                                 <MagneticButton className="w-full">
-                                                    <button className="w-full bg-white text-black font-medium py-3 rounded-full flex items-center justify-center gap-2 shadow-lg hover:bg-primary hover:text-white transition-colors">
-                                                        <ShoppingBag className="h-4 w-4" />
-                                                        Shop Now
+                                                    <button
+                                                        onClick={() => setSelectedProduct(product)}
+                                                        className="w-full bg-white text-black font-medium py-3 rounded-full flex items-center justify-center gap-2 shadow-lg hover:bg-primary hover:text-white transition-colors"
+                                                    >
+                                                        <MessageCircle className="h-4 w-4" />
+                                                        Enquire Now
                                                     </button>
                                                 </MagneticButton>
                                             </div>
@@ -247,6 +273,12 @@ export default function ProductsGrid() {
                     </div>
                 </div>
             </div>
+
+            <EnquiryModal
+                isOpen={!!selectedProduct}
+                onClose={() => setSelectedProduct(null)}
+                productName={selectedProduct?.name || ""}
+            />
         </section>
     );
 }

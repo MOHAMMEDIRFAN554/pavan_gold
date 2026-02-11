@@ -16,7 +16,7 @@ export default function PageHero({
   image?: string;
 }) {
   return (
-    <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-secondary pt-20">
+    <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-secondary pt-44">
       {image && (
         <div className="absolute inset-0">
           <Image

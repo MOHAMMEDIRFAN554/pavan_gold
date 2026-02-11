@@ -23,7 +23,7 @@ export default function Hero() {
 
       <FloatingParticles />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-48 pb-32">
         <div className="max-w-2xl">
           {/* Badge */}
           <FadeInUp delay={0.2}>

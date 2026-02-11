@@ -23,14 +23,20 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Address",
-    value: "MITHRA GOLD AND DIAMONDS LLP",
+    value: "PAVAN GOLD ",
     detail: "20/29, A-C, P-R, K.M. Complex, Thazhepalam, Town Hall Road, Tirur, Malappuram - 670101",
   },
   {
     icon: Phone,
-    label: "Phone",
+    label: "Telephone",
     value: "0494 2423916",
-    detail: "+91 98461 92222",
+    detail: "",
+  },
+  {
+    icon: Phone,
+    label: "Mobile",
+    value: "+91 98461 92222",
+    detail: "",
   },
   {
     icon: Mail,
@@ -181,7 +187,7 @@ export default function ContactContent() {
             </div>
           </SlideInLeft>
 
-          {/* Contact Info & Map */}
+          {/* Contact Info */}
           <SlideInRight>
             <div className="flex flex-col gap-8">
               {contactInfo.map((info, i) => (
@@ -212,34 +218,36 @@ export default function ContactContent() {
                   </div>
                 </motion.div>
               ))}
-
-              {/* Map */}
-              <FadeInUp delay={0.5}>
-                <div className="flex flex-col gap-4">
-                  <h3 className="font-serif text-lg text-primary">
-                    Visit Us
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Find us easily on the map below for directions to our office:
-                  </p>
-                  <div className="overflow-hidden rounded-xl border border-border">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.6550376851205!2d75.91718827479397!3d10.913799656645306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7b1f250c039cf%3A0x4d577df24b1f25c4!2sPAVAN%20GOLD%20TIRUR!5e0!3m2!1sen!2sin!4v1770799036025!5m2!1sen!2sin"
-                      width="100%"
-                      height="450"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="PAVAN GOLD location on Google Maps"
-                      className="grayscale"
-                    />
-                  </div>
-                </div>
-              </FadeInUp>
             </div>
           </SlideInRight>
         </div>
+
+        {/* Map - Full Width */}
+        <FadeInUp delay={0.5}>
+          <div className="mt-16 flex flex-col gap-6">
+            <div className="text-center">
+              <h3 className="font-serif text-2xl font-light text-primary">
+                Visit Our Store
+              </h3>
+              <p className="mt-2 text-muted-foreground">
+                Find us easily on the map below for directions to our showroom
+              </p>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-border shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.6550376851205!2d75.91718827479397!3d10.913799656645306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7b1f250c039cf%3A0x4d577df24b1f25c4!2sPAVAN%20GOLD%20TIRUR!5e0!3m2!1sen!2sin!4v1770799036025!5m2!1sen!2sin"
+                width="100%"
+                height="500"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="PAVAN GOLD location on Google Maps"
+                className="grayscale transition-all duration-500 hover:grayscale-0"
+              />
+            </div>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );
