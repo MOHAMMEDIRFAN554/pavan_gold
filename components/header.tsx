@@ -133,6 +133,7 @@ export default function Header() {
                   width={160}
                   height={80}
                   className="h-20 w-auto object-contain"
+                  priority
                 />
                 <button
                   type="button"

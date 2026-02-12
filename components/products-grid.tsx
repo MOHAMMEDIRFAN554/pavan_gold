@@ -6,57 +6,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { FadeInUp, MagneticButton } from "./animations";
 import EnquiryModal from "./enquiry-modal";
-
-// Mock Product Data - 40 Items
-const products = [
-    // Rings (1-10)
-    { id: 1, name: "Royal Diamond Ring", category: "Rings", price: 45000, image: "/images/rings.jpg", type: "Diamond", occasion: "Wedding" },
-    { id: 2, name: "Classic Gold Band", category: "Rings", price: 15000, image: "/images/rings.jpg", type: "Gold", occasion: "Daily Wear" },
-    { id: 3, name: "Platinum Solitaire", category: "Rings", price: 55000, image: "/images/rings.jpg", type: "Platinum", occasion: "Engagement" },
-    { id: 4, name: "Ruby Gemstone Ring", category: "Rings", price: 25000, image: "/images/rings.jpg", type: "Gemstone", occasion: "Party" },
-    { id: 5, name: "Emerald Gold Ring", category: "Rings", price: 30000, image: "/images/rings.jpg", type: "Gold", occasion: "Festival" },
-    { id: 6, name: "Vintage Diamond Ring", category: "Rings", price: 60000, image: "/images/rings.jpg", type: "Diamond", occasion: "Wedding" },
-    { id: 7, name: "Rose Gold Stackable", category: "Rings", price: 12000, image: "/images/rings.jpg", type: "Gold", occasion: "Daily Wear" },
-    { id: 8, name: "Sapphire Cocktail Ring", category: "Rings", price: 40000, image: "/images/rings.jpg", type: "Gemstone", occasion: "Party" },
-    { id: 9, name: "Platinum Love Band", category: "Rings", price: 35000, image: "/images/rings.jpg", type: "Platinum", occasion: "Anniversary" },
-    { id: 10, name: "Antique Gold Ring", category: "Rings", price: 28000, image: "/images/rings.jpg", type: "Gold", occasion: "Festival" },
-
-    // Necklaces (11-20)
-    { id: 11, name: "Bridal Gold Choker", category: "Necklaces", price: 120000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Wedding" },
-    { id: 12, name: "Diamond Pendant Chain", category: "Necklaces", price: 45000, image: "/images/necklaces.jpg", type: "Diamond", occasion: "Daily Wear" },
-    { id: 13, name: "Emerald Necklace", category: "Necklaces", price: 85000, image: "/images/necklaces.jpg", type: "Gemstone", occasion: "Party" },
-    { id: 14, name: "Platinum Chain", category: "Necklaces", price: 55000, image: "/images/necklaces.jpg", type: "Platinum", occasion: "Daily Wear" },
-    { id: 15, name: "Temple Jewellery Set", category: "Necklaces", price: 150000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Festival" },
-    { id: 16, name: "Layered Gold Chain", category: "Necklaces", price: 35000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Party" },
-    { id: 17, name: "Solitaire Necklace", category: "Necklaces", price: 65000, image: "/images/necklaces.jpg", type: "Diamond", occasion: "Engagement" },
-    { id: 18, name: "Ruby Bead Necklace", category: "Necklaces", price: 22000, image: "/images/necklaces.jpg", type: "Gemstone", occasion: "Casual" },
-    { id: 19, name: "Kundan Polki Set", category: "Necklaces", price: 95000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Wedding" },
-    { id: 20, name: "Mangalsutra Design", category: "Necklaces", price: 48000, image: "/images/necklaces.jpg", type: "Gold", occasion: "Daily Wear" },
-
-    // Earrings (21-30)
-    { id: 21, name: "Diamond Studs", category: "Earrings", price: 25000, image: "/images/earrings.jpg", type: "Diamond", occasion: "Daily Wear" },
-    { id: 22, name: "Gold Jhumkas", category: "Earrings", price: 35000, image: "/images/earrings.jpg", type: "Gold", occasion: "Festival" },
-    { id: 23, name: "Chandbali Earrings", category: "Earrings", price: 45000, image: "/images/earrings.jpg", type: "Gemstone", occasion: "Wedding" },
-    { id: 24, name: "Platinum Drops", category: "Earrings", price: 30000, image: "/images/earrings.jpg", type: "Platinum", occasion: "Party" },
-    { id: 25, name: "Ruby Studs", category: "Earrings", price: 18000, image: "/images/earrings.jpg", type: "Gemstone", occasion: "Daily Wear" },
-    { id: 26, name: "Temple Jhumkas", category: "Earrings", price: 42000, image: "/images/earrings.jpg", type: "Gold", occasion: "Festival" },
-    { id: 27, name: "Diamond Hoops", category: "Earrings", price: 55000, image: "/images/earrings.jpg", type: "Diamond", occasion: "Party" },
-    { id: 28, name: "Pearl Drop Earrings", category: "Earrings", price: 12000, image: "/images/earrings.jpg", type: "Gemstone", occasion: "Daily Wear" },
-    { id: 29, name: "Bridal Earring Set", category: "Earrings", price: 85000, image: "/images/earrings.jpg", type: "Gold", occasion: "Wedding" },
-    { id: 30, name: "Sui Dhaga Earrings", category: "Earrings", price: 22000, image: "/images/earrings.jpg", type: "Gold", occasion: "Daily Wear" },
-
-    // Bracelets (31-40)
-    { id: 31, name: "Gold Bangle Set", category: "Bracelets", price: 65000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Wedding" },
-    { id: 32, name: "Diamond Tennis Bracelet", category: "Bracelets", price: 95000, image: "/images/bracelets.jpg", type: "Diamond", occasion: "Party" },
-    { id: 33, name: "Platinum Cuff", category: "Bracelets", price: 45000, image: "/images/bracelets.jpg", type: "Platinum", occasion: "Daily Wear" },
-    { id: 34, name: "Gemstone Bracelet", category: "Bracelets", price: 28000, image: "/images/bracelets.jpg", type: "Gemstone", occasion: "Festival" },
-    { id: 35, name: "Traditional Kadas", category: "Bracelets", price: 75000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Wedding" },
-    { id: 36, name: "Charm Bracelet", category: "Bracelets", price: 18000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Daily Wear" },
-    { id: 37, name: "Rose Gold Bangle", category: "Bracelets", price: 32000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Party" },
-    { id: 38, name: "Men's Gold Bracelet", category: "Bracelets", price: 55000, image: "/images/bracelets.jpg", type: "Gold", occasion: "Daily Wear" },
-    { id: 39, name: "Diamond Kada", category: "Bracelets", price: 110000, image: "/images/bracelets.jpg", type: "Diamond", occasion: "Wedding" },
-    { id: 40, name: "Evil Eye Bracelet", category: "Bracelets", price: 15000, image: "/images/bracelets.jpg", type: "Gemstone", occasion: "Daily Wear" },
-];
+import { products } from "@/lib/products";
+import Link from "next/link";
 
 const categories = ["All", "Rings", "Necklaces", "Earrings", "Bracelets"];
 const types = ["All", "Gold", "Diamond", "Platinum", "Gemstone"];
@@ -209,14 +160,17 @@ export default function ProductsGrid() {
                                         className="group"
                                     >
                                         <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary">
-                                            <Image
-                                                src={product.image || "/images/placeholder-jewelry.jpg"}
-                                                alt={product.name}
-                                                fill
-                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                                            <Link href={`/products/${product.id}`} className="block h-full w-full relative">
+                                                <Image
+                                                    src={product.image || "/images/placeholder-jewelry.jpg"}
+                                                    alt={product.name}
+                                                    fill
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+
+                                                />
+                                            </Link>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
 
                                             {/* Wishlist Button */}
                                             <button

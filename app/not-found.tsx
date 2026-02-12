@@ -1,0 +1,65 @@
+import Link from "next/link";
+import { ArrowLeft, Search } from "lucide-react";
+import { FadeInUp, FloatingParticles, MagneticButton } from "@/components/animations";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+
+export default function NotFound() {
+    return (
+        <main className="flex min-h-screen flex-col">
+            <Header />
+
+            <div className="relative flex flex-1 flex-col items-center justify-center bg-background px-6 pt-52 pb-32 text-center overflow-hidden">
+                {/* Animated Background Particles */}
+                <FloatingParticles />
+
+                <FadeInUp>
+                    <div className="relative z-10 mx-auto max-w-2xl">
+                        {/* 404 Text */}
+                        <h1 className="font-serif text-[120px] leading-none font-medium text-primary/10 select-none md:text-[200px]">
+                            404
+                        </h1>
+
+                        <div className="relative -mt-16 md:-mt-24">
+                            <h2 className="font-serif text-3xl md:text-5xl font-medium text-foreground mb-6">
+                                A Hidden Gem?
+                            </h2>
+
+                            <p className="text-muted-foreground text-lg md:text-xl max-w-md mx-auto mb-10 leading-relaxed">
+                                The page you're searching for seems to be as elusive as a rare diamond. It might have been moved or doesn't exist.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <MagneticButton>
+                                    <Link
+                                        href="/"
+                                        className="flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02]"
+                                    >
+                                        <ArrowLeft className="h-4 w-4" />
+                                        Return Home
+                                    </Link>
+                                </MagneticButton>
+
+                                <MagneticButton>
+                                    <Link
+                                        href="/products"
+                                        className="flex items-center gap-2 rounded-full border border-border bg-card px-8 py-3.5 text-base font-medium text-foreground transition-all hover:border-primary/50 hover:text-primary"
+                                    >
+                                        <Search className="h-4 w-4" />
+                                        Browse Collections
+                                    </Link>
+                                </MagneticButton>
+                            </div>
+                        </div>
+                    </div>
+                </FadeInUp>
+
+                {/* Decorative elements */}
+                <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+            </div>
+
+            <Footer />
+        </main>
+    );
+}
