@@ -26,7 +26,6 @@ export default function EnquiryModal({ isOpen, onClose, productName }: EnquiryMo
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Here you would typically send the data to your backend
-        console.log("Enquiry submitted:", { product: productName, ...formData });
         setSubmitted(true);
         setTimeout(() => {
             setSubmitted(false);
