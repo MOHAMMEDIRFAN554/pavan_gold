@@ -10,7 +10,7 @@ const testimonials = [
         author: "Pavan Gold",
     },
     {
-        text: "pavan gold have ultimate wedding collections , with reasonable package",
+        text: "pavan gold have ultimate wedding collections, with reasonable package",
         author: "pavan gold",
     },
     {

@@ -103,7 +103,7 @@ export default function Footer() {
               <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
                 <li>
                   <p className="leading-relaxed">
-                    PAVAN GOLD 
+                    PAVAN GOLD
                     <br />
                     20/29, A-C, P-R, K.M. Complex,
                     <br />
@@ -113,6 +113,7 @@ export default function Footer() {
                   </p>
                 </li>
                 <li className="mt-2">
+                  <span className="font-semibold text-primary">Telephone: </span>
                   <a
                     href="tel:04942423916"
                     className="transition-colors hover:text-primary"
@@ -121,6 +122,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
+                  <span className="font-semibold text-primary">Mobile: </span>
                   <a
                     href="tel:+919846192222"
                     className="transition-colors hover:text-primary"
@@ -129,6 +131,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
+                  <span className="font-semibold text-primary">Mail: </span>
                   <a
                     href="mailto:mail@pavangold.com"
                     className="transition-colors hover:text-primary"
