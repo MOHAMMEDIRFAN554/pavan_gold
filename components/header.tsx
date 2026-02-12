@@ -59,7 +59,7 @@ export default function Header() {
                     alt="PAVAN GOLD Logo"
                     width={220}
                     height={220}
-                    className="h-40 w-auto object-contain"
+                    className="h-[7.5rem] w-auto object-contain"
                     priority
                   />
                 </motion.div>
