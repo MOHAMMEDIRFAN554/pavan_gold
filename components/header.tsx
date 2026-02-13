@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,15 +17,32 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Smooth scroll transformations
+  // Background opacity: 0 -> 1 between scroll 0 and 100
+  const headerBgOpacity = useTransform(scrollY, [0, 100], [0, 0.8]);
+  const headerBackdropBlur = useTransform(scrollY, [0, 100], [0, 12]);
+  const headerBorderOpacity = useTransform(scrollY, [0, 100], [0, 0.05]);
+  const headerShadowOpacity = useTransform(scrollY, [0, 100], [0, 0.05]);
+
+  // Transform values into CSS strings (using HSL from globals.css)
+  const backgroundColor = useTransform(headerBgOpacity, (v) => `hsl(var(--background) / ${v})`);
+  const backdropFilter = useTransform(headerBackdropBlur, (v) => `blur(${v}px)`);
+  const borderColor = useTransform(headerBorderOpacity, (v) => `hsl(var(--primary) / ${v})`);
+  const boxShadow = useTransform(headerShadowOpacity, (v) => `0 10px 15px -3px hsl(var(--primary) / ${v})`);
+
+  // Logo animation
+  // Logo scales down and fades out: 1 -> 0 between scroll 0 and 50
+  const logoScale = useTransform(scrollY, [0, 50], [1, 0.8]);
+  const logoOpacity = useTransform(scrollY, [0, 50], [1, 0]);
+  const logoWidth = useTransform(scrollY, [0, 50], ["auto", 0]);
+  const logoDisplay = useTransform(scrollY, (latest) => latest > 50 ? "none" : "block");
+
+  // Padding adjustment for smooth height change
+  const headerPadding = useTransform(scrollY, [0, 100], [16, 12]);
 
   useEffect(() => {
     setIsMobileOpen(false);
@@ -37,34 +54,39 @@ export default function Header() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${isScrolled
-          ? "bg-background/80 shadow-lg shadow-primary/5 backdrop-blur-xl border-b border-primary/5"
-          : "bg-transparent py-4"
-          }`}
+        style={{
+          backgroundColor, // Apply dynamic background
+          backdropFilter, // Apply dynamic blur
+          borderBottomColor: borderColor,
+          borderBottomWidth: "1px",
+          borderBottomStyle: "solid",
+          boxShadow,
+          paddingTop: headerPadding,
+          paddingBottom: headerPadding
+        }}
+        className="fixed top-0 right-0 left-0 z-50 transition-colors duration-200"
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-3 group">
-            <AnimatePresence>
-              {!isScrolled && (
-                <motion.div
-                  initial={{ opacity: 0, width: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, width: "auto", scale: 1 }}
-                  exit={{ opacity: 0, width: 0, scale: 0.5 }}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className="origin-left"
-                >
-                  <Image
-                    src="/images/logo.png"
-                    alt="PAVAN GOLD Logo"
-                    width={220}
-                    height={220}
-                    className="h-[7.5rem] w-auto object-contain"
-                    priority
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              style={{
+                scale: logoScale,
+                opacity: logoOpacity,
+                width: logoWidth,
+                display: logoDisplay,
+                transformOrigin: "left center"
+              }}
+              className="origin-left"
+            >
+              <Image
+                src="/images/logo.png"
+                alt="PAVAN GOLD Logo"
+                width={220}
+                height={220}
+                className="h-[7.5rem] w-auto object-contain"
+                priority
+              />
+            </motion.div>
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
