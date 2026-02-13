@@ -146,7 +146,7 @@ export default function ProductsGrid() {
                     <div className="flex-1">
                         <motion.div
                             layout
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+                            className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
                         >
                             <AnimatePresence>
                                 {filteredProducts.map((product) => (
@@ -165,7 +165,7 @@ export default function ProductsGrid() {
                                                     src={product.image || "/images/placeholder-jewelry.jpg"}
                                                     alt={product.name}
                                                     fill
-                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                    sizes="(max-width: 1024px) 50vw, 33vw"
                                                     className="object-cover transition-transform duration-700 group-hover:scale-110"
 
                                                 />

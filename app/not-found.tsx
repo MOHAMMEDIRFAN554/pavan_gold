@@ -9,21 +9,29 @@ export default function NotFound() {
         <main className="flex min-h-screen flex-col">
             <Header />
 
-            <div className="relative flex flex-1 flex-col items-center justify-center bg-background px-6 pt-52 pb-32 text-center overflow-hidden">
+            <div className="relative flex flex-1 flex-col items-center justify-center bg-background px-6 pt-32 pb-32 text-center overflow-hidden">
                 {/* Animated Background Particles */}
                 <FloatingParticles />
 
                 <FadeInUp>
-                    <div className="relative z-10 mx-auto max-w-2xl">
-                        {/* 404 Text */}
-                        <h1 className="font-serif text-[120px] leading-none font-medium text-primary/10 select-none md:text-[200px]">
-                            404
-                        </h1>
+                    <div className="relative z-10 mx-auto max-w-4xl flex flex-col items-center">
 
-                        <div className="relative -mt-16 md:-mt-24">
-                            <h2 className="font-serif text-3xl md:text-5xl font-medium text-foreground mb-6">
-                                A Hidden Gem?
-                            </h2>
+                        {/* 404 Jeweler Image */}
+                        <div className="relative w-full max-w-md aspect-[4/3] mb-8">
+                            <img
+                                src="/images/404.png"
+                                alt="Jeweler looking for a hidden gem"
+                                className="object-contain w-full h-full drop-shadow-2xl"
+                            />
+                        </div>
+
+                        {/* Text Content */}
+                        <div className="relative">
+                            <h1 className="sr-only">404 - Page Not Found</h1>
+
+                            {/* <h2 className="font-serif text-3xl md:text-5xl font-medium text-foreground mb-6">
+                                Oops! A Hidden Gem?
+                            </h2> */}
 
                             <p className="text-muted-foreground text-lg md:text-xl max-w-md mx-auto mb-10 leading-relaxed">
                                 The page you're searching for seems to be as elusive as a rare diamond. It might have been moved or doesn't exist.
